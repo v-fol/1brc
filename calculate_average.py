@@ -1,25 +1,7 @@
 import time
-from collections import defaultdict
 
 
-class Station:
-    def __init__(self, temp):
-        self.min_temp = temp
-        self.max_temp = temp
-        self.sum_temp = temp
-        self.count = 1
-
-    def add_temp(self, temp):
-        self.min_temp = min(self.min_temp, temp)
-        self.max_temp = max(self.max_temp, temp)
-        self.sum_temp += temp
-        self.count += 1
-
-    def average_temp(self):
-        return self.sum_temp / self.count
-
-
-stations_temps = defaultdict(Station)
+stations_temps = dict()
 
 
 def timing_decorator(func):
@@ -50,13 +32,16 @@ def main():
             temp = float(temp)
             station = stations_temps.get(station_name)
             if station:
-                station.add_temp(temp)
+                station[0] = min(station[0], temp)
+                station[1] = max(station[1], temp)
+                station[2] += temp
+                station[3] += 1
             else:
-                stations_temps[station_name] = Station(temp)
+                stations_temps[station_name] = [temp, temp, temp, 1]
 
     answer = ", ".join(
-        f"{station}={temps.min_temp}/{temps.average_temp()}/{temps.max_temp}"
-        for station, temps in sorted(stations_temps.items())
+        f"{station_name}={station[0]}/{station[2]/station[3]:.2f}/{station[1]}"
+        for station_name, station in sorted(stations_temps.items())
     )
 
     print("{" + answer + "}")
