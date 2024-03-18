@@ -1,0 +1,13 @@
+# Python's byte code
+*.pyc
+
+# Visual Studio Code
+.vscode
+.factorypath
+
+# Measurements
+measurements*.txt
+sample*.txt
+
+
+
