@@ -1,4 +1,4 @@
-import os, time
+import os, time, mmap
 
 from collections import defaultdict
 from multiprocessing import Pool, cpu_count
@@ -42,22 +42,29 @@ def get_file_chunks(file_name: str, cpu_count: int = 8) -> list:
 
 def process_chunk(chunk):
     file_name, chunk_start, chunk_end = chunk
+    length = chunk_end - chunk_start
+    new_chunk_start = chunk_start - (chunk_start % mmap.ALLOCATIONGRANULARITY)
+    diff = chunk_start - new_chunk_start
     stations_temps = defaultdict(lambda: [float("inf"), float("-inf"), 0, 0])
-    with open(file_name, "r") as f:
-        f.seek(chunk_start)
-        for line in f:
-            chunk_start += len(line)
-            if chunk_start > chunk_end:
-                break
-            station_name, temp = line.split(";")
-            temp = float(temp)
-            station = stations_temps[station_name]
-            if station[0] > temp:
-                station[0] = temp
-            if station[1] < temp:
-                station[1] = temp
-            station[2] += temp
-            station[3] += 1
+    with open(file_name, "rb") as f:
+        with mmap.mmap(
+            f.fileno(),
+            length=length + diff,
+            offset=new_chunk_start,
+            access=mmap.ACCESS_READ,
+        ) as mm:
+            mm.seek(diff)
+            for line in iter(mm.readline, b""):
+                station_and_temp = line.split(b";")
+                temp = float(station_and_temp[1])
+                station = stations_temps[station_and_temp[0].decode()]
+
+                if station[0] > temp:
+                    station[0] = temp
+                if station[1] < temp:
+                    station[1] = temp
+                station[2] += temp
+                station[3] += 1
 
     return dict(stations_temps)
 
@@ -96,4 +103,4 @@ def main(filename: str, cpu_count: int = cpu_count()):
 if __name__ == "__main__":
     time_start = time.time()
     main("sample.txt", cpu_count())
-    print(f"Elapsed time: {time.time()-time_start}")
+    print(f"Elapsed time: {time.time() - time_start}")
