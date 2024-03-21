@@ -54,17 +54,25 @@ def process_chunk(chunk):
             access=mmap.ACCESS_READ,
         ) as mm:
             mm.seek(diff)
-            for line in iter(mm.readline, b""):
-                semicolon_pos = line.find(b';')
-                temp = float(line[semicolon_pos + 1:].strip())
-                station = stations_temps[line[:semicolon_pos].decode()]
+            buffersize = 1024
+            incomplete_line = b''
+            chunk = mm.read(buffersize)
 
-                if station[0] > temp:
-                    station[0] = temp
-                if station[1] < temp:
-                    station[1] = temp
-                station[2] += temp
-                station[3] += 1
+            while chunk:
+                lines = (incomplete_line + chunk).splitlines(True)
+                incomplete_line = lines.pop() if lines[-1][-1:] != b'\n' else b''
+                for line in lines:
+                    semicolon_pos = line.find(b';')
+                    temp = float(line[semicolon_pos + 1:].strip())
+                    station = stations_temps[line[:semicolon_pos].decode()]
+
+                    if station[0] > temp:
+                        station[0] = temp
+                    if station[1] < temp:
+                        station[1] = temp
+                    station[2] += temp
+                    station[3] += 1
+                chunk = mm.read(buffersize)
 
     return dict(stations_temps)
 
