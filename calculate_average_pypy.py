@@ -45,26 +45,24 @@ def process_chunk(chunk):
     stations_temps = defaultdict(lambda: [float("inf"), float("-inf"), 0, 0])
     with open(file_name, "rb") as f:
         f.seek(chunk_start)
-        remaining_bytes = chunk_end - chunk_start
-        line = f.readline()
-         
+        buffersize = 2048 
+        incomplete_line = b''
         while True:
-            if remaining_bytes <= 0:
+            chunk = f.read(buffersize)
+            chunk_start += buffersize
+            if chunk_start > chunk_end:
                 break
-            
-            station_and_temp = line.split(b";")
-            temp = float(station_and_temp[1])
-            station = stations_temps[station_and_temp[0].decode()]
-
-            if station[0] > temp:
-                station[0] = temp
-            if station[1] < temp:
-                station[1] = temp
-            station[2] += temp
-            station[3] += 1
-
-            remaining_bytes -= len(line)
-            line = f.readline()
+            lines = (incomplete_line + chunk).splitlines(True)
+            incomplete_line = lines.pop() if lines[-1][-1:] != b'\n' else b''
+            for line in lines:
+                semicolon_pos = line.find(b';')
+                temp = float(line[semicolon_pos + 1:].strip())
+                station = stations_temps[line[:semicolon_pos].decode()]
+                station[0] = min(temp, station[0])
+                station[1] = max(temp, station[1])
+                station[2] += temp
+                station[3] += 1
+                
 
     return dict(stations_temps)
 
