@@ -43,8 +43,8 @@ hyperfine --prepare 'sync; echo 3 | sudo tee /proc/sys/vm/drop_caches' --runs 3 
 | PyPy | [[PyPy Iteration 3] Mmap and no buffer](https://github.com/v-fol/1brc/blob/64687458dd68ef19d9f6b8573af8cbf1c2ddd285/calculate_average_mmap_pypy.py) | 25.255 s |
 | PyPy | [[PyPy Iteration 2] From split to find and buffersize](https://github.com/v-fol/1brc/blob/05deb6f17156e069e67240a2ecd0663febdc6827/calculate_average_pypy.py) | 27.386 s |
 | PyPy | [[PyPy Iteration 1] Back to drawing board](https://github.com/v-fol/1brc/blob/96e20767567d03ee744cf6ae6f8c2ee54270bd88/calculate_average_pypy.py) | 31.928 s |
-| Python | [[Iteration 5] Say hello to ALLOCATIONGRANULARITY](https://github.com/v-fol/1brc/blob/fea65037f7b62c1bc17e9bc1172cd8818a2f8a38/calculate_average.py) |  |
-| Python | [[Iteration 4] Cpu go brrr (multiprocessing to the rescue)](https://github.com/v-fol/1brc/blob/df3ba9d7b19462af0598dd52f5bd57f11e2191ee/calculate_average.py) |  |
-| Python | [[Iteration 3] Byte by byte (and say hello to mister defaultdict)](https://github.com/v-fol/1brc/blob/dd9f1f5e40e087f0fb66a25d28da2d0f26828962/calculate_average.py) |  |
-| Python | [[Iteration 2] Ditching the classes](https://github.com/v-fol/1brc/blob/2655e3e34e18a1115ed196fca80e59d684efe517/calculate_average.py) |  |
-| Python | [[Iteration 1] Pythonic way (this is the way)](https://github.com/v-fol/1brc/blob/9f960155bb1d9c6e1a4157bf2c82e477b125ff93/calculate_average.py) |  |
+| Python | [[Iteration 5] Say hello to ALLOCATIONGRANULARITY](https://github.com/v-fol/1brc/blob/fea65037f7b62c1bc17e9bc1172cd8818a2f8a38/calculate_average.py) | 53.289 s |
+| Python | [[Iteration 4] Cpu go brrr (multiprocessing to the rescue)](https://github.com/v-fol/1brc/blob/df3ba9d7b19462af0598dd52f5bd57f11e2191ee/calculate_average.py) | 61.331 s |
+| Python | [[Iteration 3] Byte by byte (and say hello to mister defaultdict)](https://github.com/v-fol/1brc/blob/dd9f1f5e40e087f0fb66a25d28da2d0f26828962/calculate_average.py) | 487.782 s |
+| Python | [[Iteration 2] Ditching the classes](https://github.com/v-fol/1brc/blob/2655e3e34e18a1115ed196fca80e59d684efe517/calculate_average.py) | 524.197 s |
+| Python | [[Iteration 1] Pythonic way (this is the way)](https://github.com/v-fol/1brc/blob/9f960155bb1d9c6e1a4157bf2c82e477b125ff93/calculate_average.py) | 562.839 s |
