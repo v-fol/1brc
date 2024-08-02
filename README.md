@@ -37,12 +37,12 @@ hyperfine --prepare 'sync; echo 3 | sudo tee /proc/sys/vm/drop_caches' --runs 3 
 ## Benchmarks
 | Interpreter | Version | Time |
 | ----------- | ------ | ---- |
-| PyPy | [[PyPy Iteration 6] Float is heavy, Int is good](https://github.com/v-fol/1brc/blob/031f877e94ba70647828435950fe853d1b9770b6/calculate_average_mmap_pypy_int.py) | 1.841 s ±  0.035 s |
-| PyPy | [[PyPy Iteration 5] Forget buffer, chunking chunks](https://github.com/v-fol/1brc/blob/ffc55f4ff4ace3fcc6df70aaef69006366b0dd29/calculate_average_mmap_pypy.py) |  |
-| PyPy | [[PyPy Iteration 4] Mmap with buffer](https://github.com/v-fol/1brc/blob/df5756213758d6b522ab9c7dd9d5fae981a7c120/calculate_average_mmap_pypy.py) |  |
-| PyPy | [[PyPy Iteration 3] Mmap and no buffer](https://github.com/v-fol/1brc/blob/64687458dd68ef19d9f6b8573af8cbf1c2ddd285/calculate_average_mmap_pypy.py) |  |
-| PyPy | [[PyPy Iteration 2] From split to find and buffersize](https://github.com/v-fol/1brc/blob/05deb6f17156e069e67240a2ecd0663febdc6827/calculate_average_pypy.py) |  |
-| PyPy | [[PyPy Iteration 1] Back to drawing board](https://github.com/v-fol/1brc/blob/96e20767567d03ee744cf6ae6f8c2ee54270bd88/calculate_average_pypy.py) |  |
+| PyPy | [[PyPy Iteration 6] Float is heavy, Int is good](https://github.com/v-fol/1brc/blob/031f877e94ba70647828435950fe853d1b9770b6/calculate_average_mmap_pypy_int.py) | 14.053 s ±  0.071 s |
+| PyPy | [[PyPy Iteration 5] Forget buffer, chunking chunks](https://github.com/v-fol/1brc/blob/ffc55f4ff4ace3fcc6df70aaef69006366b0dd29/calculate_average_mmap_pypy.py) | 22.077 s ±  0.786 s |
+| PyPy | [[PyPy Iteration 4] Mmap with buffer](https://github.com/v-fol/1brc/blob/df5756213758d6b522ab9c7dd9d5fae981a7c120/calculate_average_mmap_pypy.py) | 26.089 s |
+| PyPy | [[PyPy Iteration 3] Mmap and no buffer](https://github.com/v-fol/1brc/blob/64687458dd68ef19d9f6b8573af8cbf1c2ddd285/calculate_average_mmap_pypy.py) | 25.255 s |
+| PyPy | [[PyPy Iteration 2] From split to find and buffersize](https://github.com/v-fol/1brc/blob/05deb6f17156e069e67240a2ecd0663febdc6827/calculate_average_pypy.py) | 27.386 s |
+| PyPy | [[PyPy Iteration 1] Back to drawing board](https://github.com/v-fol/1brc/blob/96e20767567d03ee744cf6ae6f8c2ee54270bd88/calculate_average_pypy.py) | 31.928 s |
 | Python | [[Iteration 5] Say hello to ALLOCATIONGRANULARITY](https://github.com/v-fol/1brc/blob/fea65037f7b62c1bc17e9bc1172cd8818a2f8a38/calculate_average.py) |  |
 | Python | [[Iteration 4] Cpu go brrr (multiprocessing to the rescue)](https://github.com/v-fol/1brc/blob/df3ba9d7b19462af0598dd52f5bd57f11e2191ee/calculate_average.py) |  |
 | Python | [[Iteration 3] Byte by byte (and say hello to mister defaultdict)](https://github.com/v-fol/1brc/blob/dd9f1f5e40e087f0fb66a25d28da2d0f26828962/calculate_average.py) |  |
