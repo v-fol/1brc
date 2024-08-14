@@ -1,4 +1,4 @@
-## My implementation of the "One Bilion Row Challange" in Python
+## My implementation of the "One Billion Row Challenge" in Python
 
 Original post and rulles - https://www.morling.dev/blog/one-billion-row-challenge/
 
